@@ -48,7 +48,7 @@ public class MessageTrim {
 
 	// 判读字符串是否包含时间格式
 	private boolean IsStartWithTime(String text) {
-		if (text.length() >= 20 && IsTime(text.substring(0, 19)))
+		if (text.length() >= 20 && IsTime(text.substring(0,10)))
 			return true;
 		return false;
 	}
@@ -83,14 +83,13 @@ public class MessageTrim {
 				text = line.substring(5, 10);
 				String str = "@@@User:" + text;
 				write(str, fullPath);
-			} else if (!IsStartWith(line, "消息对象:") && IsStartWithTime(line)) {
+			} else if (IsStartWithTime(line)) {
 				write("", fullPath);
 
 			} else if (!IsStartWith(line, "消息分组:") && !IsStartWith(line, "==")
 					&& !IsStartWith(line, "消息记录")) {
 				Matcher m = pattern.matcher(line);
-				write(m.replaceAll("").replaceAll("\\[]", "") + "\n",
-						fullPath);
+				write(m.replaceAll("").replaceAll("\\[]", "") + "\n", fullPath);
 
 			}
 		}
@@ -101,7 +100,7 @@ public class MessageTrim {
 	public static void main(String[] args) throws IOException {
 		MessageTrim mt = new MessageTrim();
 		mt.read(baseFile);
-		System.out.println("success");
-
+	    System.out.println("success");
+		
 	}
 }
