@@ -7,6 +7,8 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MessageTrim {
 
@@ -71,6 +73,8 @@ public class MessageTrim {
 		File file = new File(path);
 		FileInputStream s = new FileInputStream(file);
 		String text;
+		Pattern pattern = Pattern
+				.compile("[图片]|[表情]|[鼓掌]|[动作消息]|[我伙呆]|[发呆]|[我]");
 		BufferedReader reader = new BufferedReader(new InputStreamReader(s,
 				"utf8"));
 		for (String line = reader.readLine(); line != null; line = reader
@@ -78,14 +82,16 @@ public class MessageTrim {
 			if (IsStartWith(line, "消息对象:")) {
 				text = line.substring(5, 10);
 				String str = "@@@User:" + text;
-				write(str + "\n", fullPath);
-			} else if (IsStartWithTime(line)) {
-				text = line.substring(19, line.length());
-				write(text + "\n", fullPath);
+				write(str, fullPath);
+			} else if (!IsStartWith(line, "消息对象:") && IsStartWithTime(line)) {
+				write("", fullPath);
 
 			} else if (!IsStartWith(line, "消息分组:") && !IsStartWith(line, "==")
 					&& !IsStartWith(line, "消息记录")) {
-				write(line + "\n", fullPath);
+				Matcher m = pattern.matcher(line);
+				write(m.replaceAll("").replaceAll("\\[]", "") + "\n",
+						fullPath);
+
 			}
 		}
 		reader.close();
