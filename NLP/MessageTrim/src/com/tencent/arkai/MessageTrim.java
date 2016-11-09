@@ -87,7 +87,7 @@ public class MessageTrim {
 		for (String line = reader.readLine(); line != null; line = reader
 				.readLine()) {
 			if (IsStartWith(line, "消息对象:")) {
-				text = line.substring(5, 10);
+				text = line.substring(5,line.length());
 				String str = "@@@User:" + text;
 				write(str, fullPath);
 			} else if (IsStartWithTime(line)) {

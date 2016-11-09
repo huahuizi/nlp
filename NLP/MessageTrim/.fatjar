@@ -1,10 +1,10 @@
 #Fat Jar Configuration File
-#Wed Nov 09 18:37:55 CST 2016
+#Wed Nov 09 19:14:55 CST 2016
 onejar.license.required=true
 manifest.classpath=
 manifest.removesigners=true
 onejar.checkbox=false
-jarname=MessageTrim_fat.jar
+jarname=MessageTrim.jar
 manifest.mergeall=true
 manifest.mainclass=com.tencent.arkai.MessageTrim
 manifest.file=<createnew>
