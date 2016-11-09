@@ -48,7 +48,7 @@ public class MessageTrim {
 
 	// 判读字符串是否包含时间格式
 	private boolean IsStartWithTime(String text) {
-		if (text.length() >= 20 && IsTime(text.substring(0,10)))
+		if (text.length() >= 20 && IsTime(text.substring(0, 10)))
 			return true;
 		return false;
 	}
@@ -73,8 +73,11 @@ public class MessageTrim {
 		File file = new File(path);
 		FileInputStream s = new FileInputStream(file);
 		String text;
-		Pattern pattern = Pattern
-				.compile("[图片]|[表情]|[鼓掌]|[动作消息]|[我伙呆]|[发呆]|[我]");
+
+		String strRegex = "\\[*[\u4e00-\u9fa5]*\\]";
+
+		Pattern pattern = Pattern.compile(strRegex);
+
 		BufferedReader reader = new BufferedReader(new InputStreamReader(s,
 				"utf8"));
 		for (String line = reader.readLine(); line != null; line = reader
@@ -100,7 +103,7 @@ public class MessageTrim {
 	public static void main(String[] args) throws IOException {
 		MessageTrim mt = new MessageTrim();
 		mt.read(baseFile);
-	    System.out.println("success");
-		
+		System.out.println("success");
+
 	}
 }
