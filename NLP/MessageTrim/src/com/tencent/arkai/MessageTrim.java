@@ -11,8 +11,8 @@ import java.io.InputStreamReader;
 public class MessageTrim {
 
 	// 判读字符串是否起始于prefix
-	private static final String fullPath = "messageTrim.txt";
-	private static final String baseFile = "message.txt";
+	private static final String fullPath = "消息提取.txt";
+	private static final String baseFile = "全部消息记录.txt";
 
 	private boolean IsStartWith(String text, String prefix) {
 
