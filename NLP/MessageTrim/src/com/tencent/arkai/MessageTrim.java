@@ -10,6 +10,10 @@ import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @author fightingliu
+ *
+ */
 public class MessageTrim {
 
 	// 判读字符串是否起始于prefix
@@ -25,7 +29,6 @@ public class MessageTrim {
 	// 清除重复文件
 	private void fileClear(String path) {
 		File files = new File(path);
-
 		// if file doesnt exists, then create it
 		if (files.exists()) {
 			files.delete();
@@ -74,6 +77,7 @@ public class MessageTrim {
 		FileInputStream s = new FileInputStream(file);
 		String text;
 
+		// 匹配[中文]类型的字符串，如"[表情]"
 		String strRegex = "\\[*[\u4e00-\u9fa5]*\\]";
 
 		Pattern pattern = Pattern.compile(strRegex);
