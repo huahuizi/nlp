@@ -77,8 +77,8 @@ public class MessageTrim {
 		FileInputStream s = new FileInputStream(file);
 		String text;
 
-		// 匹配[中文]类型的字符串，如"[表情]"
-		String strRegex = "\\[*[\u4e00-\u9fa5]*\\]";
+		// 匹配[字符]类型的字符串，如"[表情] [123] [abc]之类的"
+		String strRegex = "\\[*[\u4e00-\u9fa5]*\\]|\\[*[0-9a-zA-Z]*\\]|\\[*^\\d+$*\\]";
 
 		Pattern pattern = Pattern.compile(strRegex);
 
