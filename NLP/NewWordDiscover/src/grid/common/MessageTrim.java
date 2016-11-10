@@ -1,20 +1,27 @@
-package com.zju.learn;
+package grid.common;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * @author Xingliu
+ * @category 提取消息记录到text.txt
+ */
 public class MessageTrim {
 
 	// 判读字符串是否起始于prefix
-	private static final String fullPath = "消息提取.txt";
+	private static final String fullPath = "message.dat";
 	private static final String baseFile = "全部消息记录.txt";
 
 	private boolean IsStartWith(String text, String prefix) {
@@ -53,6 +60,23 @@ public class MessageTrim {
 		return false;
 	}
 
+	public void GBKtoUtf8(String file) throws Exception {
+		BufferedReader bre = null;
+		BufferedWriter bw = null;// 定义一个流
+
+		bre = new BufferedReader(new FileReader(file));// 此时获取到的bre就是整个文件的缓存流
+		bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
+				"text.dat"), Charset.forName("UTF-8")));// 确认流的输出文件和编码格式，此过程创建了“test.txt”实例
+		String str;
+		while ((str = bre.readLine()) != null) // 判断最后一行不存在，为空结束循环
+		{
+			bw.write(str);
+		}
+		;
+		bw.close();// 关闭流
+		bre.close();// 关闭流
+	}
+
 	private void write(String text, String path) throws IOException {
 		File file = new File(path);
 
@@ -68,7 +92,7 @@ public class MessageTrim {
 		bufferWritter.close();
 	}
 
-	private void read(String path) throws IOException {
+	private void read(String path) throws Exception {
 		fileClear(fullPath);
 		File file = new File(path);
 		FileInputStream s = new FileInputStream(file);
@@ -98,13 +122,15 @@ public class MessageTrim {
 			}
 		}
 		reader.close();
-
+		
 	}
 
-	public static void main(String[] args) throws IOException {
+	public static void MsgExtract() throws Exception {
 		MessageTrim mt = new MessageTrim();
 		mt.read(baseFile);
-		System.out.println("success");
+		mt.GBKtoUtf8(fullPath);
+		mt.fileClear(fullPath);
+		System.out.println("提取消息语料成功，结果保存在text.dat");
 
 	}
 }

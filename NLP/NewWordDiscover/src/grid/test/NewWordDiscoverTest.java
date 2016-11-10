@@ -1,5 +1,6 @@
 package grid.test;
 
+import grid.common.MessageTrim;
 import grid.common.TextDatReader;
 import grid.text.evolution.NewWordDiscover;
 import grid.text.index.CnPreviewTextIndexer;
@@ -12,7 +13,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class NewWordDiscoverTest {
-	public static void writefile(String m) {
+	private void writefile(String m) {
 
 		try {
 			File file = new File("result.txt");
@@ -30,18 +31,24 @@ public class NewWordDiscoverTest {
 	}
 
 	@SuppressWarnings("resource")
-	public static void main(String[] args) throws Exception {
-		// 开始之前，清空result.txt，避免数据重复
+	private void FileDivide() throws Exception {
 		File filere = new File("result.txt");
 		filere.delete();
-
 		Scanner scan = new Scanner(System.in);
+		System.out.println("是否提取QQ信息语料数据?是:1 否:0\n");
+		int flag = scan.nextInt();
+		if (flag == 1) {
+			System.out.println("在QQ中消息管理器右上角-》导出全部消息记录导出为 全部消息记录.txt到当前目录下\n");
+			MessageTrim.MsgExtract();
+
+		}
 		System.out.println("请输入您要处理的文件名称:\n");
 		String path = scan.next();
 		File file = new File(path);
 		if (!file.exists() || (!file.isFile())) {
 			throw new Exception("指定文件不存在！");
 		}
+		
 		long maxsize = 1024 * 1024 * 1024;// 1G,超过这个值需要做文件切分
 		long size = 1024 * 1024 * 5; // 子文件最大为100M
 		long fileLength = file.length();
@@ -73,16 +80,17 @@ public class NewWordDiscoverTest {
 			System.out.println("开始提取文件……");
 			discovrWord(path);
 		}
+
 	}
 
-	private static void discovrWord(String path) throws IOException {
+	private void discovrWord(String path) throws IOException {
 		String document = TextDatReader.read(path);
 		NewWordDiscover discover = new NewWordDiscover();
 		Set<String> words = discover.discover(document);
 		CnPreviewTextIndexer ci = new CnPreviewTextIndexer(document);
-//		long start = System.currentTimeMillis();
-//		System.out.println("耗时: " + (double) document.length()
-//				/ (System.currentTimeMillis() - start) * 1000);
+		// long start = System.currentTimeMillis();
+		// System.out.println("耗时: " + (double) document.length()
+		// / (System.currentTimeMillis() - start) * 1000);
 		System.out.println("新词个数: " + words.size());
 		System.out.println("发现的新词:" + "\n");
 		for (String newword : words) {
@@ -90,4 +98,10 @@ public class NewWordDiscoverTest {
 			writefile(newword + "," + ci.count(newword) + "\n");
 		}
 	}
+
+	public static void main(String[] args) throws Exception {
+		NewWordDiscoverTest nd = new NewWordDiscoverTest();
+		nd.FileDivide();
+	}
+
 }

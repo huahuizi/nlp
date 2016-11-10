@@ -9,4 +9,4 @@
 #  common.dic不可缺少
 
 
-# 项目基于https://github.com/GeorgeBourne/grid
+# 如果使用聊天信息作为语料库，在QQ中消息管理器右上角-》导出全部消息记录导出为 全部消息记录.txt
