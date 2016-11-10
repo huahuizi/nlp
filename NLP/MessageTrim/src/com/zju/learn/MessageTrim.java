@@ -1,4 +1,4 @@
-package com.tencent.arkai;
+package com.zju.learn;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,10 +10,7 @@ import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @author fightingliu
- * 
- */
+
 public class MessageTrim {
 
 	// 判读字符串是否起始于prefix
