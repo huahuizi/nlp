@@ -48,7 +48,7 @@ public class NewWordDiscoverTest {
 		if (!file.exists() || (!file.isFile())) {
 			throw new Exception("指定文件不存在！");
 		}
-		
+
 		long maxsize = 1024 * 1024 * 1024;// 1G,超过这个值需要做文件切分
 		long size = 1024 * 1024 * 5; // 子文件最大为100M
 		long fileLength = file.length();
